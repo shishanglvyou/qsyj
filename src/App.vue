@@ -1,31 +1,48 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <van-nav-bar
+        :title="title"
+        fixed
+        v-show='navViewShow'
+    />
+    <router-view @onTitle='getTitle' @onNavShow="getShow"></router-view>
+    <TabBar/>
   </div>
 </template>
-
+<script>
+  import TabBar from './components/TabBar/TabBar'
+  export default {
+    data(){
+      return{
+        title: '',	// 导航标题(子组件传递过来)
+        navViewShow: true,// 导航显示或隐藏
+      }
+    },
+    components:{
+      TabBar
+    },
+    methods:{
+      getTitle(title){
+        this.title=title;
+      },
+      getShow(temp){
+        this.navViewShow = temp
+      },
+    },
+  }
+</script>
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
+  @import "assets/css/reset.css";
+  .van-nav-bar{
+    background: red;
+    height: 3rem;
+  }
+  .van-nav-bar__title{
+    color: #fff;
+  }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
+  .van-nav-bar .van-icon{
+    color: white;
+    font-size: 1rem;
+  }
 </style>
